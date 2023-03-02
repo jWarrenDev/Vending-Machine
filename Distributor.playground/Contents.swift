@@ -68,21 +68,54 @@ enum Bill: Double {
 /// needs to create an array of of billTypes
 ///
 /// Methods:
-/// displayMethod
+/// displayMethod  - Done
 /// addCoinMethod
 /// add billMethod
 /// refundMethod
 /// selectItemMethod
+/// addItem Method - Done
 
 
 class Distributor {
     var items: [Item]
-    let balance: Double
+    var balance: Double
     let coinTypes: [Coin] = [.penny, .nickle, .dime, .quarter, .example]
+    var selectedItem: Item?
     
     init(items: [Item]) {
         self.items = items
         self.balance = 0
+    }
+    
+    
+    func insertCoin(_ coin: Coin) {
+        switch coin {
+        case .penny:
+            balance += Coin.penny.rawValue
+        case .nickle:
+            balance += Coin.nickle.rawValue
+        case .dime:
+            balance += Coin.dime.rawValue
+        case .quarter:
+            balance += Coin.quarter.rawValue
+        default:
+            print("No coins")
+        }
+    }
+    
+    func insertBill(_ bill: Bill) {
+        switch bill {
+        case .one:
+            balance += Bill.one.rawValue
+        case .five:
+            balance += Bill.five.rawValue
+        case .ten:
+            balance += Bill.ten.rawValue
+        case .twenty:
+            balance += Bill.twenty.rawValue
+        default:
+            print("No Bills")
+        }
     }
     
     func addItem(name: String, price: Double, isAvailable: Bool) {
@@ -98,6 +131,32 @@ class Distributor {
         }
     }
     
+    func selectItem(_ index: Int) {
+        guard index >= 0 && index < items.count else {
+            print("Invalid item")
+            return
+        }
+            // Wrong approach
+//            for (index, item) in items.enumerated() {
+//                print("You have selected \(item.name)")
+//            }
+            
+        let item = items[index]
+        selectedItem = item
+        
+        if let selectedItem = selectedItem {
+            print("You have selected \(selectedItem.name) for the price of \(selectedItem.price)")
+        }
+       
+    }
+    
+    
+    func refundBalance() {
+        print("Your refund balance is \(balance).")
+        balance = 0
+    }
+    
+    
 }
 
 
@@ -111,5 +170,17 @@ let distributor = Distributor(items: items)
 distributor.displayItems()
 // how would you sort items
 
+distributor.insertCoin(.dime)
+distributor.insertCoin(.quarter)
+distributor.balance
+distributor.refundBalance()
+distributor.insertBill(.twenty)
+distributor.insertCoin(.nickle)
+distributor.insertCoin(.penny)
+distributor.balance
+distributor.refundBalance()
 
+distributor.selectItem(1)
+distributor.displayItems()
 
+distributor.selectItem(4)
