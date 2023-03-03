@@ -51,10 +51,10 @@ enum Coin: Double {
 }
 
 enum Bill: Double {
-    case one = 1.0
-    case five = 5.0
-    case ten = 10.0
-    case twenty = 20.0
+    case one = 1.00
+    case five = 5.00
+    case ten = 10.00
+    case twenty = 20.00
 }
 
 // MARK: Setting up Distributer Class
@@ -150,6 +150,11 @@ class Distributor {
        
     }
     
+    func showBalance() {
+        let formattedBalance = String(format: "%0.2f", balance)
+        print(formattedBalance)
+    }
+    
     
     func refundBalance() {
         print("Your refund balance is \(balance).")
@@ -183,4 +188,12 @@ distributor.refundBalance()
 distributor.selectItem(1)
 distributor.displayItems()
 
-distributor.selectItem(4)
+distributor.selectItem(4) // doesn't exist at this point
+distributor.insertBill(.twenty)
+distributor.showBalance()
+
+distributor.insertCoin(.nickle)
+distributor.insertCoin(.nickle)
+distributor.insertCoin(.nickle)
+
+distributor.showBalance()
