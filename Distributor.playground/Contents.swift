@@ -23,6 +23,7 @@ import Foundation
     - Balance of all the coins
     - Set Enough to buy
     - Set Enough to refund
+    - Dispense Item
 
  
  */
@@ -87,6 +88,7 @@ class Distributor {
         self.balance = 0
     }
     
+    // MARK: Insert Coins
     
     func insertCoin(_ coin: Coin) {
         switch coin {
@@ -103,6 +105,8 @@ class Distributor {
         }
     }
     
+    // MARK: Insert Bills
+    
     func insertBill(_ bill: Bill) {
         switch bill {
         case .one:
@@ -118,6 +122,8 @@ class Distributor {
         }
     }
     
+    // MARK: Methods
+    
     func addItem(name: String, price: Double, isAvailable: Bool) {
         var newItem = Item(name: name,
                            price: price,
@@ -127,7 +133,7 @@ class Distributor {
     
     func displayItems() {
         for (index, item) in items.enumerated() {
-            print("(\(index). \(item.name) - $\(item.price))")
+            print("(\(index). \(item.name) - $\(String(format: "%0.2f", item.price)))")
         }
     }
     
@@ -150,24 +156,57 @@ class Distributor {
        
     }
     
+    func dispenseItem() {
+        guard let item = selectedItem else  {
+            print("No Item Selected")
+            return
+        }
+        
+        guard item.price <= balance else {
+            print("Insufficent balance")
+            return
+        }
+        
+        print("Dispensing \(item.name)")
+        balance -= item.price
+        selectedItem = nil
+    }
+    
     func showBalance() {
-        let formattedBalance = String(format: "%0.2f", balance)
-        print(formattedBalance)
+        
+     //   let formattedBalance = String(format: "%0.2f", balance)
+        print(balance.asDollarString())
+        
     }
     
     
     func refundBalance() {
-        print("Your refund balance is \(balance).")
+        print("Your refund balance is \(balance.asDollarString()).")
         balance = 0
     }
     
     
 }
 
+    // MARK: Extension on Dollar formatting
+
+extension Double {
+    func asDollarString() -> String {
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        
+        return formatter.string(from: NSNumber(value: self)) ?? ""
+    }
+}
+
 
 let items = [
             Item(name: "Cookies", price: 1.00, isAvailable: true),
-            Item(name: "Chips", price: 0.5, isAvailable: false)
+            Item(name: "Chips", price: 0.50, isAvailable: false)
             ]
 
 let distributor = Distributor(items: items)
@@ -195,5 +234,11 @@ distributor.showBalance()
 distributor.insertCoin(.nickle)
 distributor.insertCoin(.nickle)
 distributor.insertCoin(.nickle)
+
+distributor.showBalance()
+distributor.dispenseItem()
+distributor.dispenseItem()
+distributor.showBalance()
+distributor.refundBalance()
 
 distributor.showBalance()
