@@ -80,7 +80,7 @@ enum Bill: Double {
 class Distributor {
     var items: [Item]
     var balance: Double
-    let coinTypes: [Coin] = [.penny, .nickle, .dime, .quarter, .example]
+  //  let coinTypes: [Coin] = [.penny, .nickle, .dime, .quarter, .example]
     var selectedItem: Item?
     
     init(items: [Item]) {
