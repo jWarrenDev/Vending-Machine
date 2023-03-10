@@ -91,35 +91,13 @@ class Distributor {
     // MARK: Insert Coins
     
     func insertCoin(_ coin: Coin) {
-        switch coin {
-        case .penny:
-            balance += Coin.penny.rawValue
-        case .nickle:
-            balance += Coin.nickle.rawValue
-        case .dime:
-            balance += Coin.dime.rawValue
-        case .quarter:
-            balance += Coin.quarter.rawValue
-        default:
-            print("No coins")
-        }
+        balance += coin.rawValue
     }
     
     // MARK: Insert Bills
     
     func insertBill(_ bill: Bill) {
-        switch bill {
-        case .one:
-            balance += Bill.one.rawValue
-        case .five:
-            balance += Bill.five.rawValue
-        case .ten:
-            balance += Bill.ten.rawValue
-        case .twenty:
-            balance += Bill.twenty.rawValue
-        default:
-            print("No Bills")
-        }
+        balance += bill.rawValue
     }
     
     // MARK: Methods
