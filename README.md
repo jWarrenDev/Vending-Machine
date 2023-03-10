@@ -1,2 +1,2 @@
 # Vending-Machine
-Simple Playground to practice Setting up a Vending Machine
+Setting up a Vending Machine with Swift
